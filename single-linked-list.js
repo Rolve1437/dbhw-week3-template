@@ -12,31 +12,85 @@ function SinglyLinkedList() {
 SinglyLinkedList.prototype.add = function(data) {
   var node = new Node(data);
   if(!this.head) {
-    //TODO
-  } else {
-    //TODO
+    this.head = node;
+    this.tail = node;
   }
-
+  else {
+    this.tail.next = node;
+    this.tail = node;
+  }
+  this.numberOfValues++;
 };
 
 SinglyLinkedList.prototype.remove = function(data) {
-  var previous = this.head;
   var current = this.head;
-  //TODO
-};
+  if(data === current.data){
+    this.head = this.head.next;
+    this.numberOfValues--;
+  }
+
+  else{
+    var previous = current;
+    current = current.next;
+
+    while(current){
+      if(data === current.data){
+        if(current === this.tail){
+          this.tail = previous;
+        }
+          previous.next = current.next;
+          this.numberOfValues--;
+      }
+      else{
+        previous = current;
+      }
+      current = current.next;
+    }
+  }
+}
 
 SinglyLinkedList.prototype.insertAfter = function(data, toNodeData) {
   var current = this.head;
-  //TODO
-};
+
+  while (current) {
+    if(current.data === toNodeData){
+      var node = new Node(data);
+
+      if(current === this.tail){ //嘗試用add();
+        this.tail.next = node;
+        this.tail = node;
+      }
+
+      else{
+        node.next = current.next;
+        current.next = node;
+      }
+      this.numberOfValues++;
+    }
+
+    else{
+      console.log("Data not found!");
+    }
+
+    current = current.next;
+  }
+}
 
 SinglyLinkedList.prototype.length = function() {
-  //TODO
-};
+  return this.numberOfValues;
+}
 
 SinglyLinkedList.prototype.print = function() {
-  //TODO
-};
+  var s = "";
+  var current = this.head;
+
+  while (current) {
+    s += current.data + " ";
+    current = current.next;
+  }
+
+  return s.trim();
+}
 
 
 /*
